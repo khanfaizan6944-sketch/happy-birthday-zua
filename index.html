@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Happy Birthday</title>
+
+<!--
+  ============================================================
+  HOW TO USE THIS SITE (read before uploading to GitHub)
+  ============================================================
+  1. Create a folder called "assets" next to this index.html.
+  2. Drop your files in with these EXACT names (or edit the
+     paths below to match your own filenames):
+
+     assets/photo1.jpg      -> first poster photo
+     assets/photo2.jpg      -> second poster photo
+     assets/photo3.jpg      -> third poster photo
+     assets/video1.mp4      -> first video
+     assets/video2.mp4      -> second video
+     assets/song.mp3        -> the personalised audio recording
+     assets/reveal.jpg      -> the photo shown when she taps "Yes"
+
+  3. Search this file for "REPLACE" to find every spot where you
+     should swap in your own note/message text.
+  4. Push everything (index.html, style.css, script.js, assets/)
+     to your GitHub repo and enable GitHub Pages.
+  ============================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=Quicksand:wght@400;500;600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Starfield / 3D depth canvas, sits behind everything -->
+<canvas id="stars"></canvas>
+
+<!-- floating "now playing" indicator, visible on every section once the song starts -->
+<div id="miniPlayer" class="mini-player hidden">
+  <span class="mini-note">&#9835;</span>
+  <span class="mini-label">now playing</span>
+</div>
+
+<!-- side progress dots -->
+<nav class="dots" aria-hidden="true">
+  <span data-target="hero" class="dot active"></span>
+  <span data-target="poster1" class="dot"></span>
+  <span data-target="poster2" class="dot"></span>
+  <span data-target="poster3" class="dot"></span>
+  <span data-target="videos" class="dot"></span>
+  <span data-target="player" class="dot"></span>
+  <span data-target="question" class="dot"></span>
+  <span data-target="finale" class="dot"></span>
+</nav>
+
+<main class="scroller">
+
+  <!-- ============ HERO ============ -->
+  <section id="hero" class="panel hero">
+    <p class="eyebrow">this universe is dedicated to</p>
+    <h1 class="display italic">Happy Birthday,<br><span class="name">Zua</span></h1>
+    <p class="lead">
+      REPLACE: your opening romantic message goes here — a few sentences
+      that set the tone before she scrolls any further.
+    </p>
+    <div class="scroll-hint">
+      <span>swipe up</span>
+      <div class="arrow"></div>
+    </div>
+  </section>
+
+  <!-- ============ POSTER 1 ============ -->
+  <section id="poster1" class="panel poster-panel">
+    <div class="poster tilt-a">
+      <div class="poster-photo">
+        <img src="assets/photo1.jpg" alt="A memory, photo one" onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+      </div>
+      <p class="poster-note">REPLACE: note for photo one</p>
+    </div>
+  </section>
+
+  <!-- ============ POSTER 2 ============ -->
+  <section id="poster2" class="panel poster-panel">
+    <div class="poster tilt-b">
+      <div class="poster-photo">
+        <img src="assets/photo2.jpg" alt="A memory, photo two" onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+      </div>
+      <p class="poster-note">REPLACE: note for photo two</p>
+    </div>
+  </section>
+
+  <!-- ============ POSTER 3 ============ -->
+  <section id="poster3" class="panel poster-panel">
+    <div class="poster tilt-c">
+      <div class="poster-photo">
+        <img src="assets/photo3.jpg" alt="A memory, photo three" onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+      </div>
+      <p class="poster-note">REPLACE: note for photo three</p>
+    </div>
+  </section>
+
+  <!-- ============ VIDEOS ============ -->
+  <section id="videos" class="panel videos-panel">
+    <h2 class="display italic section-title">little moments</h2>
+    <div class="video-stack">
+      <div class="video-card tilt-a">
+        <video controls playsinline poster="assets/photo1.jpg">
+          <source src="assets/video1.mp4" type="video/mp4">
+        </video>
+        <p class="poster-note">REPLACE: note for video one</p>
+      </div>
+      <div class="video-card tilt-b">
+        <video controls playsinline poster="assets/photo2.jpg">
+          <source src="assets/video2.mp4" type="video/mp4">
+        </video>
+        <p class="poster-note">REPLACE: note for video two</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CD / AUDIO PLAYER ============ -->
+  <section id="player" class="panel player-panel">
+    <h2 class="display italic section-title">a song for you</h2>
+    <div class="cd-wrap">
+      <div class="cd" id="cd">
+        <div class="cd-hole"></div>
+      </div>
+    </div>
+    <audio id="song" src="assets/song.mp3" preload="none"></audio>
+    <button id="playBtn" class="play-btn" aria-label="Play song">
+      <span class="icon">&#9658;</span>
+    </button>
+    <p class="poster-note">REPLACE: caption about the recording, e.g. "recorded just for you"</p>
+  </section>
+
+  <!-- ============ QUESTION ============ -->
+  <section id="question" class="panel question-panel">
+    <div class="question-photo">
+      <img src="assets/photo3.jpg" alt="" onerror="this.style.display='none'">
+    </div>
+    <h2 class="display italic">does she love me?</h2>
+    <div class="answer-row">
+      <button id="yesBtn" class="answer yes">yes</button>
+      <button id="noBtn" class="answer no">no</button>
+    </div>
+
+    <div id="heartbreak" class="heartbreak hidden">
+      <div class="crack"></div>
+      <p>ouch. let's try that again.</p>
+    </div>
+
+    <div id="revealModal" class="reveal-modal hidden">
+      <div class="reveal-card">
+        <img src="assets/reveal.jpg" alt="Reveal photo" onerror="this.style.display='none'">
+        <p class="poster-note">REPLACE: caption shown with the reveal photo</p>
+        <button id="closeReveal" class="close-reveal">close</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINALE ============ -->
+  <section id="finale" class="panel finale-panel">
+    <p class="script-note">
+      REPLACE: your final, most heartfelt happy birthday note goes here —
+      write it exactly the way you'd say it to her in person.
+    </p>
+    <p class="signoff">— [REPLACE: your name]</p>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
+
